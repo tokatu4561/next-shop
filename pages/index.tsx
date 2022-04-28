@@ -1,8 +1,20 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { getProducts } from "../lib/product";
+import { IProduct } from "../types/product";
 
-const Home: NextPage = () => {
+interface HomePageProps {
+  products: IProduct[];
+}
+
+export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
+  const products = await getProducts();
+
+  return { props: { products } };
+};
+
+const Home: NextPage<HomePageProps> = ({ products }) => {
   return (
     <div>
       <Head>
@@ -11,7 +23,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main></main>
+      <main>
+        {products.map((product) => (
+          <li>{product.title}</li>
+        ))}
+      </main>
     </div>
   );
 };
