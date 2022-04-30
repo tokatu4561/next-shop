@@ -3,12 +3,13 @@ import { fetchJson } from "./api";
 
 const CMS_URL = process.env.CMS_URL;
 
-const stripProduct = (product: IProduct) => {
+const stripProduct = (product: any) => {
   return {
     id: product.id,
     title: product.title,
     description: product.description,
     price: product.price,
+    pictureUrl: CMS_URL + product.picture.url,
   };
 };
 

@@ -53,7 +53,7 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-8 py-4"></main>
+      <main className="px-8 py-4">{product.title}</main>
     </div>
   );
 };
