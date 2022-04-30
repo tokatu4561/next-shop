@@ -8,6 +8,7 @@ const stripProduct = (product: IProduct) => {
     id: product.id,
     title: product.title,
     description: product.description,
+    price: product.price,
   };
 };
 
