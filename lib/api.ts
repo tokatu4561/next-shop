@@ -15,8 +15,8 @@ export class ApiError extends Error {
   }
 }
 
-export async function fetchJson(url: string) {
-  const response = await fetch(url);
+export async function fetchJson(url: string, option?: any) {
+  const response = await fetch(url, option);
 
   if (!response.ok) {
     throw new ApiError(url, response.status);
