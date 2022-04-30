@@ -1,4 +1,7 @@
 import { IProduct } from "../types/product";
+import { fetchJson } from "./api";
+
+const CMS_URL = "http://localhost:1337";
 
 const stripProduct = (product: IProduct) => {
   return {
@@ -9,15 +12,13 @@ const stripProduct = (product: IProduct) => {
 };
 
 export const getProduct = async (id: string) => {
-  const response = await fetch(`http://localhost:1337/products/${id}`);
-  const product = await response.json();
+  const product = await fetchJson(`${CMS_URL}/products/${id}`);
 
   return stripProduct(product);
 };
 
 export const getProducts = async () => {
-  const response = await fetch("http://localhost:1337/products");
-  const products = await response.json();
+  const products = await fetchJson(`${CMS_URL}/products`);
 
   return products.map(stripProduct);
 };
