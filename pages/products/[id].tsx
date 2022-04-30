@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getProduct, getProducts } from "../../lib/product";
 import { IProduct } from "../../types/product";
 import { ApiError } from "../../lib/api";
+import Image from "next/image";
 
 interface ProductPageParams extends ParsedUrlQuery {
   id: string;
@@ -53,7 +54,18 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="px-8 py-4">{product.title}</main>
+      <main className="px-8 py-4">
+        <h1>{product.title}</h1>
+        <div className="flex flex-col lg:flex-row">
+          <div>
+            <Image src={product.pictureUrl} alt="" width="640" height="480" />
+          </div>
+          <div className="flex-1 lg:ml-4 text-gray-500">
+            <p className="text-sm">{product.description}</p>
+            <p className="text-lg font-bold mt-4">{`$${product.price}`}</p>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
