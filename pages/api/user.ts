@@ -9,12 +9,14 @@ const handler: NextApiHandler = async (req, res) => {
 
   if (!jwt) {
     res.status(401).end();
+    return;
   }
 
   try {
-    const { user } = await fetchJson(`${CMS_URL}/user/me`, {
+    const user = await fetchJson(`${CMS_URL}/users/me`, {
       headers: { Authorization: `Bearer ${jwt}` },
     });
+    console.log(user);
 
     res.status(200).json({
       id: user.id,
