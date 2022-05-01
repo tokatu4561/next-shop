@@ -1,17 +1,10 @@
 import Link from "next/link";
-import React, { FC, ReactNode, useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { useUser } from "../hooks/user";
-import { fetchJson } from "../lib/api";
-import { IUser } from "../types/user";
+import React, { FC } from "react";
+import { useSignOut, useUser } from "../hooks/user";
 
 export const NavBar: FC = () => {
-  const user: IUser = useUser();
-
-  const handleSignOut = async () => {
-    await fetchJson("/api/logout");
-    // setUser(undefined);
-  };
+  const user = useUser();
+  const signOut = useSignOut();
 
   return (
     <nav className="p-4 text-sm">
@@ -23,7 +16,7 @@ export const NavBar: FC = () => {
           <>
             <li className="space-x-4">
               <span>{user.name}</span>
-              <button onClick={handleSignOut}>Sign Out</button>
+              <button onClick={signOut}>Sign Out</button>
             </li>
           </>
         ) : (

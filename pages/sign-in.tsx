@@ -5,32 +5,21 @@ import { Button } from "../components/Button";
 import { Field } from "../components/Filed";
 import { Input } from "../components/Input";
 import { Layout } from "../components/Layout";
+import { useSignIn } from "../hooks/user";
 import { fetchJson } from "../lib/api";
 
 const SignIn: NextPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
+  const { isError, isLoading, signIn } = useSignIn();
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setError(false);
-    setLoading(true);
-
-    try {
-      const response = await fetchJson("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      setLoading(false);
+    const valid = signIn(email, password);
+    if (valid) {
       router.push("/");
-    } catch (error) {
-      setError(true);
-      setLoading(false);
     }
   };
 
@@ -51,12 +40,16 @@ const SignIn: NextPage = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </Field>
-        {error && (
+        {isError && (
           <p className="text-red-700">
             メールアドレス、もしくはパスワードが間違っています。
           </p>
         )}
-        {loading ? <p>Loading ...</p> : <Button type="submit">Sign In</Button>}
+        {isLoading ? (
+          <p>Loading ...</p>
+        ) : (
+          <Button type="submit">Sign In</Button>
+        )}
       </form>
     </Layout>
   );
