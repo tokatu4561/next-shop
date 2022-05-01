@@ -1,23 +1,16 @@
 import Link from "next/link";
 import React, { FC, ReactNode, useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { useUser } from "../hooks/user";
 import { fetchJson } from "../lib/api";
 import { IUser } from "../types/user";
 
 export const NavBar: FC = () => {
-  const [user, setUser] = useState<IUser>();
-
-  useEffect(() => {
-    async () => {
-      try {
-        const user = await fetchJson("/api/user");
-        setUser(user);
-      } catch (error) {}
-    };
-  }, []);
+  const user: IUser = useUser();
 
   const handleSignOut = async () => {
     await fetchJson("/api/logout");
-    setUser(undefined);
+    // setUser(undefined);
   };
 
   return (
