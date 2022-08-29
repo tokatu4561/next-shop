@@ -1,5 +1,6 @@
 
 ## Getting Started
+ecサイトの練習
 
 ### バックエンドサーバー(strapi)立ち上げ
 cd next-shop-backend <br />
